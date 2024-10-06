@@ -11,7 +11,7 @@
 		A18AE4F22CB1B006001F8152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A18AE4F12CB1B006001F8152 /* Assets.xcassets */; };
 		A18AE4F52CB1B006001F8152 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A18AE4F32CB1B006001F8152 /* LaunchScreen.storyboard */; };
 		A18AE4F82CB1B006001F8152 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A18AE4F72CB1B006001F8152 /* main.m */; };
-		A18AE4FF2CB1B1E8001F8152 /* CamlLib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A18AE4FE2CB1B1E8001F8152 /* CamlLib.xcframework */; };
+		A18AE5012CB2ECE3001F8152 /* CamlLib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A18AE5002CB2ECE2001F8152 /* CamlLib.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,7 +21,7 @@
 		A18AE4F42CB1B006001F8152 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A18AE4F62CB1B006001F8152 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A18AE4F72CB1B006001F8152 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A18AE4FE2CB1B1E8001F8152 /* CamlLib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CamlLib.xcframework; path = ../../CamlLib.xcframework; sourceTree = "<group>"; };
+		A18AE5002CB2ECE2001F8152 /* CamlLib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = CamlLib.xcframework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,7 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A18AE4FF2CB1B1E8001F8152 /* CamlLib.xcframework in Frameworks */,
+				A18AE5012CB2ECE3001F8152 /* CamlLib.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +55,7 @@
 		A18AE4E42CB1B005001F8152 /* CamlApp */ = {
 			isa = PBXGroup;
 			children = (
-				A18AE4FE2CB1B1E8001F8152 /* CamlLib.xcframework */,
+				A18AE5002CB2ECE2001F8152 /* CamlLib.xcframework */,
 				A18AE4EE2CB1B005001F8152 /* Main.storyboard */,
 				A18AE4F12CB1B006001F8152 /* Assets.xcassets */,
 				A18AE4F32CB1B006001F8152 /* LaunchScreen.storyboard */,
