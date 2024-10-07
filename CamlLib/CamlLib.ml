@@ -71,15 +71,6 @@ module GreetingsTVC = struct
         |> UISplitViewController.showColumn
             _UISplitViewControllerColumnSecondary)
 
-  let viewDidLoad =
-    Method.define
-      ~args: Objc_t.[]
-      ~return: Objc_t.void
-      ~cmd: (selector "viewDidLoad")
-      (fun self cmd ->
-        self |> msg_super cmd ~args: Objc_t.[] ~return: Objc_t.void;
-        self |> UIViewController.setTitle (new_string "Greetings"))
-
   (* This class is referenced in Main.xib *)
   let _self =
     Class.define "GreetingsTVC"
@@ -90,7 +81,6 @@ module GreetingsTVC = struct
         ; numberOfRowsInSection
         ; cellForRowAtIndexPath
         ; didSelectRowAtIndexPath
-        ; viewDidLoad
         ]
 end
 
@@ -128,7 +118,13 @@ module AppDelegate = struct
           ~cmd: (selector "sceneActivated")
           ~args: Objc_t.[id]
           ~return: Objc_t.void
-          (fun _self _cmd _scene -> Printf.eprintf "sceneActivated...\n%!")
+          (fun _self _cmd notif ->
+            notif
+            |> NSNotification.object_
+            |> UIWindowScene.windows
+            |> NSArray.lastObject
+            |> UIWindow.rootViewController
+            |> UISplitViewController.showColumn _UISplitViewControllerColumnPrimary)
 
         ; Method.define
           ~cmd: (selector "application:configurationForConnectingSceneSession:options:")
