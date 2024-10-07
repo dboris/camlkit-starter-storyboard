@@ -55,15 +55,21 @@ module GreetingsTVC = struct
       ~return: Objc_t.void
       ~cmd: (selector "tableView:didSelectRowAtIndexPath:")
       (fun self _cmd _tv index_path ->
-        let i = index_path |> NSIndexPath.row |> LLong.to_int in
-        self
-        |> UIViewController.parentViewController  (* nav vc *)
-        |> UIViewController.parentViewController  (* split vc *)
+        let i = index_path |> NSIndexPath.row |> LLong.to_int
+        and split_vc =
+          self
+          |> UIViewController.navigationController
+          |> UIViewController.parentViewController
+        in
+        split_vc
         |> UISplitViewController.viewControllerForColumn
             _UISplitViewControllerColumnSecondary
         |> UIViewController.view
         |> UIView.viewWithTag 1
-        |> UILabel.setText (new_string (snd greetings.(i))))
+        |> UILabel.setText (new_string (snd greetings.(i)));
+        split_vc
+        |> UISplitViewController.showColumn
+            _UISplitViewControllerColumnSecondary)
 
   let viewDidLoad =
     Method.define

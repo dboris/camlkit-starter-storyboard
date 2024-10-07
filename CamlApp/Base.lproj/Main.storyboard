@@ -35,7 +35,7 @@
             </objects>
             <point key="canvasLocation" x="-223.66412213740458" y="241.5492957746479"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Greetings-->
         <scene sceneID="Fpb-Rq-i11">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="zMV-80-ODX" customClass="GreetingsTVC" sceneMemberID="viewController">
@@ -67,7 +67,7 @@
                             <outlet property="delegate" destination="zMV-80-ODX" id="P7Z-2c-bKm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="QtI-d5-bwh"/>
+                    <navigationItem key="navigationItem" title="Greetings" id="QtI-d5-bwh"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tfz-I3-HjH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
