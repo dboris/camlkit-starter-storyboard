@@ -1,10 +1,9 @@
-open Foundation
 open UIKit
-open Runtime
 
 let greetings =
   [| "English", "Hello World!"
    ; "Spanish", "Hola Mundo!"
+   ; "French", "Bonjour, le monde !"
    |]
 
 module GreetingsTVC = struct
@@ -14,48 +13,33 @@ module GreetingsTVC = struct
   let cellID = new_string "Cell"
 
   let numberOfSectionsInTableView =
-    Method.define
-      ~args: Objc_t.[id]
-      ~return: Objc_t.llong
-      ~cmd: (selector "numberOfSectionsInTableView:")
+    UITableViewControllerMethods.numberOfSectionsInTableView'
       (fun _self _cmd _tv -> LLong.of_int 1)
 
   let titleForHeaderInSection =
-    Method.define
-      ~args: Objc_t.[id; llong]
-      ~return: Objc_t.id
-      ~cmd: (selector "tableView:titleForHeaderInSection:")
+    UITableViewControllerMethods.tableView'titleForHeaderInSection'
       (fun _self _cmd _tv _section -> new_string "Language")
 
   let numberOfRowsInSection =
-    Method.define
-      ~args: Objc_t.[id; llong]
-      ~return: Objc_t.llong
-      ~cmd: (selector "tableView:numberOfRowsInSection:")
+    UITableViewControllerMethods.tableView'numberOfRowsInSection'
       (fun _self _cmd _tv _section -> LLong.of_int (Array.length greetings))
 
   let cellForRowAtIndexPath =
-    Method.define
-      ~args: Objc_t.[id; id]
-      ~return: Objc_t.id
-      ~cmd: (selector "tableView:cellForRowAtIndexPath:")
+    UITableViewControllerMethods.tableView'cellForRowAtIndexPath'
       (fun _self _cmd tv index_path ->
         let cell =
           tv |> UITableView.dequeueReusableCellWithIdentifier' cellID
             ~forIndexPath: index_path
-        and i = index_path |> NSIndexPath.row |> LLong.to_int in
+        and i = index_path |> NSIndexPath.row in
         cell
         |> UITableViewCell.textLabel
         |> UILabel.setText (new_string (fst greetings.(i)));
         cell)
 
   let didSelectRowAtIndexPath =
-    Method.define
-      ~args: Objc_t.[id; id]
-      ~return: Objc_t.void
-      ~cmd: (selector "tableView:didSelectRowAtIndexPath:")
+    UITableViewDelegate.tableView'didSelectRowAtIndexPath'
       (fun self _cmd _tv index_path ->
-        let i = index_path |> NSIndexPath.row |> LLong.to_int
+        let i = index_path |> NSIndexPath.row
         and split_vc =
           self
           |> UIViewController.navigationController
@@ -91,8 +75,7 @@ module SceneDelegate = struct
     Class.define "SceneDelegate"
       ~superclass: UIResponder.self
       ~protocols: [Objc.get_protocol "UIWindowSceneDelegate"]
-      ~ivars: [Ivar.define "window" Objc_t.id]
-      ~methods: (Property._object_ "window" Objc_t.id ())
+      ~properties: [Property.define "window" Objc_type.id]
 end
 
 module AppDelegate = struct
@@ -101,10 +84,7 @@ module AppDelegate = struct
     Class.define "AppDelegate"
       ~superclass: UIResponder.self
       ~methods:
-        [ Method.define
-          ~cmd: (selector "application:didFinishLaunchingWithOptions:")
-          ~args: Objc_t.[id; id]
-          ~return: Objc_t.bool
+        [ UIApplicationDelegate.application'didFinishLaunchingWithOptions'
           (fun self _cmd _app _opts ->
             NSNotificationCenter.self
             |> NSNotificationCenterClass.defaultCenter
@@ -116,8 +96,8 @@ module AppDelegate = struct
 
         ; Method.define
           ~cmd: (selector "sceneActivated")
-          ~args: Objc_t.[id]
-          ~return: Objc_t.void
+          ~args: Objc_type.[id]
+          ~return: Objc_type.void
           (fun _self _cmd notif ->
             notif
             |> NSNotification.object_
@@ -126,10 +106,7 @@ module AppDelegate = struct
             |> UIWindow.rootViewController
             |> UISplitViewController.showColumn _UISplitViewControllerColumnPrimary)
 
-        ; Method.define
-          ~cmd: (selector "application:configurationForConnectingSceneSession:options:")
-          ~args: Objc_t.[id; id; id]
-          ~return: Objc_t.id
+        ; UIApplicationDelegate.application'configurationForConnectingSceneSession'options'
           (fun _self _cmd _app conn_session _opts ->
             alloc UISceneConfiguration.self
             |> UISceneConfiguration.initWithName (new_string "Default Configuration")
